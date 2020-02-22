@@ -94,10 +94,16 @@ public class DriveBase {
 
         if (controller.getY(left) > 0.05 || controller.getY(left) < -0.05) {
             throttle = controller.getY(left);
+            throttle = -throttle;  //to southpaw or not.  currently not.
+
+        } else {
+            throttle =0;
         }
 
-        if (controller.getX(right) > 0.05 || controller.getX(right) < -0.05) {
-            turn = controller.getX(right);
+        if (controller.getX(left) > 0.05 || controller.getX(left) < -0.05) {
+            turn = controller.getX(left);
+        } else{
+            turn = 0;
         }
 
         leftfrontmotor.set(turn - throttle);
@@ -113,14 +119,12 @@ public class DriveBase {
 
         if (controller.getY(left) > 0.05 || controller.getY(left) < -0.05) {
             throttle = controller.getY(left);
+            throttle = -throttle; //to not southpaw
+        } else if (controller.getY(left) < 0.05 || controller.getY(left) > -0.05) {
+            throttle = 0;
         }
-
-        leftfrontmotor.set(turn - throttle);
-        leftrearmotor.set(turn - throttle);
-
-        rightfrontmotor.set(turn + throttle);
-        rightrearmotor.set(turn + throttle);
     }
+        
 
     public void snapToAngle() {
         double turn = turnController.calculate(getAngle());
@@ -173,11 +177,11 @@ public class DriveBase {
     public void distanceDrive() {
         double throttle = driveController.calculate(getLeftPosition());
 
-        leftfrontmotor.set(throttle);
-        leftrearmotor.set(throttle);
+        leftfrontmotor.set(-throttle);
+        leftrearmotor.set(-throttle);
 
-        rightfrontmotor.set(-throttle);
-        rightrearmotor.set(-throttle);
+        rightfrontmotor.set(throttle);
+        rightrearmotor.set(throttle);
     }
 
     public void setAngle(double angle) {
@@ -190,6 +194,7 @@ public class DriveBase {
 
     public double getLeftPosition() {
         return leftfrontmotor.getEncoder().getPosition();
+        
     }
 
     public double getRightPosition() {

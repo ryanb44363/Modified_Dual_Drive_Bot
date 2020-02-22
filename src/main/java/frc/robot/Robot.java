@@ -14,7 +14,7 @@ public class Robot extends TimedRobot {
     public static final GenericHID.Hand left = GenericHID.Hand.kLeft;
     public static final GenericHID.Hand right = GenericHID.Hand.kRight;
 
-    public static DriveBase base = new DriveBase(3, 4, 1, 2);
+    public static DriveBase base = new DriveBase(1, 2, 3, 4);
 
     //public static DistanceSensor dist = new DistanceSensor(Rev2mDistanceSensor.Port.kOnboard);
 
@@ -36,7 +36,7 @@ public class Robot extends TimedRobot {
     public void teleopPeriodic() {
         reseter();
 
-        setAngle();
+        //setAngle(); does this change anything for our build? 
         
         drive();
 
@@ -78,7 +78,7 @@ public class Robot extends TimedRobot {
 
     public void reseter() {
         if (controller.getAButtonReleased()) {
-            base.reset();
+            //base.reset(); //Could cause locking, we don't have gyro, need to look at reset
             //System.out.print("Base Reset.");
         }
     }

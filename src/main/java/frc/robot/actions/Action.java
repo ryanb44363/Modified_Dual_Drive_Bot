@@ -7,4 +7,9 @@ public interface Action {
     void start();
 
     int status();
+
+    //void update();
+    
+    //void done();
+
 }
